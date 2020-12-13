@@ -27,9 +27,13 @@ UIAlertController *errorController = NULL;
 // The dylib constructor sets decryptedIPAPath, spawns a thread to do the app decryption, then exits.
 __attribute__ ((constructor)) static void bfinject_rocknroll() {
     
-    NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
-    NSNumber *value = [[[NSDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.level3tjg.bfdecrypt.plist"] objectForKey:bundleID];
-    if ([value boolValue] == YES) {
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *bundleID = [bundle bundleIdentifier];
+    NSString *name = [bundle infoDictionary][@"CFBundleName"];
+    NSDictionary *ourDict = [[NSDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.level3tjg.bfdecrypt.plist"];
+    NSNumber *value = [ourDict objectForKey:bundleID];
+    NSNumber *valueName = [ourDict objectForKey:name];
+    if ([value boolValue] == YES || [valueName boolValue] == YES) {
         NSLog(@"[bfdecrypt] Spawning thread to do decryption in the background...");
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{        

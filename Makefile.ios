@@ -28,7 +28,7 @@ SDK_PATH=$(shell xcrun --sdk $(SDK) --show-sdk-path)
 CC=$(shell xcrun --sdk $(SDK) --find clang)
 CXX=$(shell xcrun --sdk $(SDK) --find clang++)
 LD=$(CXX) -ObjC
-INCLUDES=-I $(SDK_PATH)/usr/include -I SSZipArchive -I SSZipArchive/minizip
+INCLUDES=-I $(SDK_PATH)/usr/include -I SSZipArchive -I SSZipArchive/minizipopen 
 ARCHS=-arch arm64
 
 IOS_FLAGS=-isysroot $(SDK_PATH) -miphoneos-version-min=11.0
