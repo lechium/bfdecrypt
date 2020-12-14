@@ -29,10 +29,11 @@ __attribute__ ((constructor)) static void bfinject_rocknroll() {
     
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *bundleID = [bundle bundleIdentifier];
-    NSString *name = [bundle infoDictionary][@"CFBundleName"];
+    NSString *name = [bundle infoDictionary][@"CFBundleDisplayName"];
     NSDictionary *ourDict = [[NSDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.level3tjg.bfdecrypt.plist"];
     NSNumber *value = [ourDict objectForKey:bundleID];
     NSNumber *valueName = [ourDict objectForKey:name];
+    NSLog(@"[bfdecrypt) bundle ID %@ bundle display name: %@", bundleID, name);
     if ([value boolValue] == YES || [valueName boolValue] == YES) {
         NSLog(@"[bfdecrypt] Spawning thread to do decryption in the background...");
         
