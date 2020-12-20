@@ -29,11 +29,14 @@ __attribute__ ((constructor)) static void bfinject_rocknroll() {
     
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *bundleID = [bundle bundleIdentifier];
-    NSString *name = [bundle infoDictionary][@"CFBundleDisplayName"];
+    NSDictionary *infoDict = [bundle infoDictionary];
+    NSString *name = infoDict[@"CFBundleDisplayName"];
     if (!name){
         NSDictionary *localizedInfoDict = [bundle localizedInfoDictionary];
         if (localizedInfoDict){
             name = localizedInfoDict[@"CFBundleName"];
+        } else {
+            name = infoDict[@"CFBundleName"];
         }
     }
     NSDictionary *ourDict = [[NSDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.level3tjg.bfdecrypt.plist"];
